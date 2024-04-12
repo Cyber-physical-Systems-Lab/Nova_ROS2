@@ -1,0 +1,25 @@
+moveit_setup_assistant_config:
+  urdf:
+    package: robot_description
+    relative_path: urdf/nova2_robot.urdf
+  srdf:
+    relative_path: config/nova2_robot.srdf
+  package_settings:
+    author_name: NIU Xuezhi
+    author_email: xuezhi.niu@it.uu.se
+    generated_timestamp: 1712851960
+  control_xacro:
+    command:
+      - position
+    state:
+      - position
+      - velocity
+  modified_urdf:
+    xacros:
+      - control_xacro
+  control_xacro:
+    command:
+      - position
+    state:
+      - position
+      - velocity
