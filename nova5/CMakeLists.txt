@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.22)
-project(nova2)
+project(nova5)
 
 find_package(ament_cmake REQUIRED)
 

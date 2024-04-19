@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>nova2</name>
+  <name>nova5</name>
   <version>0.3.0</version>
   <description>
-     An automatically generated package with all the configuration and launch files for using the nova2_robot with the MoveIt Motion Planning Framework
+     An automatically generated package with all the configuration and launch files for using the nova5_robot with the MoveIt Motion Planning Framework
   </description>
   <maintainer email="xuezhi.niu@it.uu.se">NIU Xuezhi</maintainer>
 

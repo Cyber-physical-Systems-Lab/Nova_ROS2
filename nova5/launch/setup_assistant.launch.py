@@ -3,5 +3,5 @@ from moveit_configs_utils.launches import generate_setup_assistant_launch
 
 
 def generate_launch_description():
-    moveit_config = MoveItConfigsBuilder("nova2_robot", package_name="nova2").to_moveit_configs()
+    moveit_config = MoveItConfigsBuilder("nova5_robot", package_name="nova5").to_moveit_configs()
     return generate_setup_assistant_launch(moveit_config)

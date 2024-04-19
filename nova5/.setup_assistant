@@ -1,13 +1,13 @@
 moveit_setup_assistant_config:
   urdf:
     package: robot_description
-    relative_path: urdf/nova2_robot.urdf
+    relative_path: urdf/nova5_robot.xacro
   srdf:
-    relative_path: config/nova2_robot.srdf
+    relative_path: config/nova5_robot.srdf
   package_settings:
     author_name: NIU Xuezhi
     author_email: xuezhi.niu@it.uu.se
-    generated_timestamp: 1712851960
+    generated_timestamp: 1713544302
   control_xacro:
     command:
       - position
