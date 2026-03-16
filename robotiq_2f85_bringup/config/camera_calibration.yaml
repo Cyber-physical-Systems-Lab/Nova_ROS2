@@ -1,0 +1,42 @@
+image_width: 1920
+image_height: 1080
+camera_name: narrow_stereo
+camera_matrix:
+  rows: 3
+  cols: 3
+  data: [1755.047230, 0.0, 911.309388, 0.0, 1760.811699, 536.802476, 0.0, 0.0, 1.0]
+distortion_model: plumb_bob
+distortion_coefficients:
+  rows: 1
+  cols: 5
+  data: [0.044771, -0.313438, -0.008577, -0.007711, 0.0]
+rectification_matrix:
+  rows: 3
+  cols: 3
+  data: [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
+projection_matrix:
+  rows: 3
+  cols: 4
+  data: [1721.690292, 0.0, 892.137392, 0.0, 0.0, 1767.120069, 531.888511, 0.0, 0.0, 0.0, 1.0, 0.0]
+
+
+# image_width: 640
+# image_height: 480
+# camera_name: ________________USB2_0Camera___SB__PC00_XHCI_RHUB_HS13_13_1_0_0bda_5a63_640x480
+# camera_matrix:
+#   rows: 3
+#   cols: 3
+#   data: [596.719361, 0.0, 326.975702, 0.0, 595.285585, 238.549625, 0.0, 0.0, 1.0]
+# distortion_model: plumb_bob
+# distortion_coefficients:
+#   rows: 1
+#   cols: 5
+#   data: [0.064356, -0.265710, -0.006256, -0.002845, 0.0]
+# rectification_matrix:
+#   rows: 3
+#   cols: 3
+#   data: [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
+# projection_matrix:
+#   rows: 3
+#   cols: 4
+#   data: [594.881916, 0.0, 325.835148, 0.0, 0.0, 597.455178, 236.666876, 0.0, 0.0, 0.0, 1.0, 0.0]

@@ -1,0 +1,145 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:macro name="nova5_robot_ros2_control" params="name initial_positions_file">
+        <xacro:property name="initial_positions" value="${load_yaml(initial_positions_file)['initial_positions']}"/>
+
+        <ros2_control name="${name}" type="system">
+            <hardware>
+                <!-- By default, set up controllers for simulation. This won't work on real hardware -->
+                <plugin>mock_components/GenericSystem</plugin>
+            </hardware>
+            <joint name="joint1">
+                <command_interface name="position"/>
+                <state_interface name="position">
+                  <param name="initial_value">${initial_positions['joint1']}</param>
+                </state_interface>
+                <state_interface name="velocity"/>
+            </joint>
+            <joint name="joint2">
+                <command_interface name="position"/>
+                <state_interface name="position">
+                  <param name="initial_value">${initial_positions['joint2']}</param>
+                </state_interface>
+                <state_interface name="velocity"/>
+            </joint>
+            <joint name="joint3">
+                <command_interface name="position"/>
+                <state_interface name="position">
+                  <param name="initial_value">${initial_positions['joint3']}</param>
+                </state_interface>
+                <state_interface name="velocity"/>
+            </joint>
+            <joint name="joint4">
+                <command_interface name="position"/>
+                <state_interface name="position">
+                  <param name="initial_value">${initial_positions['joint4']}</param>
+                </state_interface>
+                <state_interface name="velocity"/>
+            </joint>
+            <joint name="joint5">
+                <command_interface name="position"/>
+                <state_interface name="position">
+                  <param name="initial_value">${initial_positions['joint5']}</param>
+                </state_interface>
+                <state_interface name="velocity"/>
+            </joint>
+            <joint name="joint6">
+                <command_interface name="position"/>
+                <state_interface name="position">
+                  <param name="initial_value">${initial_positions['joint6']}</param>
+                </state_interface>
+                <state_interface name="velocity"/>
+            </joint>
+
+        </ros2_control>
+    </xacro:macro>
+</robot>
+
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:macro name="robotiq_gripper_ros2_control" params="
+        name
+        prefix
+        sim_ignition:=false
+        sim_isaac:=false
+        isaac_joint_commands:=/isaac_joint_commands
+        isaac_joint_states:=/isaac_joint_states
+        mock_sensor_commands:=false
+        gripper_closed_position:=0.7929">
+
+        <ros2_control name="${name}" type="system">
+            <!-- Plugins -->
+            <hardware>
+
+                <xacro:if value="${sim_isaac}">
+                    <plugin>topic_based_ros2_control/TopicBasedSystem</plugin>
+                    <param name="joint_commands_topic">${isaac_joint_commands}</param>
+                    <param name="joint_states_topic">${isaac_joint_states}</param>
+                    <param name="trigger_joint_command_threshold">0.02</param>
+                </xacro:if>
+                <xacro:if value="${sim_ignition}">
+                    <plugin>ign_ros2_control/IgnitionSystem</plugin>
+                </xacro:if>
+                <!-- Real hardware and mock mode both use GenericSystem.
+                     Actual gripper communication is handled externally by the
+                     robotiq_2f85_bringup action server via Modbus TCP. -->
+                <xacro:unless value="${sim_ignition or sim_isaac}">
+                    <plugin>mock_components/GenericSystem</plugin>
+                    <param name="mock_sensor_commands">${mock_sensor_commands}</param>
+                    <param name="state_following_offset">0.0</param>
+                </xacro:unless>
+            </hardware>
+
+            <!-- Primary actuated joint -->
+            <joint name="${prefix}robotiq_85_left_knuckle_joint">
+                <command_interface name="position" />
+                <state_interface name="position">
+                    <param name="initial_value">${gripper_open_position}</param>
+                </state_interface>
+                <state_interface name="velocity"/>
+            </joint>
+
+            <!-- Mimic joints — required by mock_components/GenericSystem for correct state propagation -->
+            <xacro:unless value="${sim_ignition}">
+                <joint name="${prefix}robotiq_85_right_knuckle_joint">
+                    <param name="mimic">${prefix}robotiq_85_left_knuckle_joint</param>
+                    <param name="multiplier">-1</param>
+                    <command_interface name="position"/>
+                    <state_interface name="position"/>
+                    <state_interface name="velocity"/>
+                </joint>
+                <joint name="${prefix}robotiq_85_left_inner_knuckle_joint">
+                    <param name="mimic">${prefix}robotiq_85_left_knuckle_joint</param>
+                    <param name="multiplier">1</param>
+                    <command_interface name="position"/>
+                    <state_interface name="position"/>
+                    <state_interface name="velocity"/>
+                </joint>
+                <joint name="${prefix}robotiq_85_right_inner_knuckle_joint">
+                    <param name="mimic">${prefix}robotiq_85_left_knuckle_joint</param>
+                    <param name="multiplier">-1</param>
+                    <command_interface name="position"/>
+                    <state_interface name="position"/>
+                    <state_interface name="velocity"/>
+                </joint>
+                <joint name="${prefix}robotiq_85_left_finger_tip_joint">
+                    <param name="mimic">${prefix}robotiq_85_left_knuckle_joint</param>
+                    <param name="multiplier">-1</param>
+                    <command_interface name="position"/>
+                    <state_interface name="position"/>
+                    <state_interface name="velocity"/>
+                </joint>
+                <joint name="${prefix}robotiq_85_right_finger_tip_joint">
+                    <param name="mimic">${prefix}robotiq_85_left_knuckle_joint</param>
+                    <param name="multiplier">1</param>
+                    <command_interface name="position"/>
+                    <state_interface name="position"/>
+                    <state_interface name="velocity"/>
+                </joint>
+            </xacro:unless>
+
+        </ros2_control>
+    </xacro:macro>
+
+</robot>

@@ -1,0 +1,30 @@
+/**:
+    ros__parameters:
+        image_transport: raw    # image format
+        family: 36h11           # tag family name
+        size: 0.032             # tag edge size in meter (adjust to your printed tag!)
+        max_hamming: 1          # allow 1-bit correction for robustness on printed tags
+        qos_profile: default    # "sensor_data", "default", or "system_default"
+
+        detector:
+            threads: 1          # number of threads
+            decimate: 1.0       # full resolution – helps detect smaller/farther tags
+            blur: 0.0           # sigma of Gaussian blur for quad detection
+            refine: True        # snap to strong gradients
+            sharpening: 0.25    # sharpening of decoded images
+            debug: False        # write debugging images to current working directory
+
+        pose_estimation_method: "pnp"
+
+        # tag.ids: list of tag IDs to publish poses for.
+        # Empty lists → publish ALL detected tags.
+        # Add your specific IDs here if you want named frames, e.g.:
+        #   ids:   [0, 1]
+        #   frames: [tag_zero, tag_one]
+        #   sizes:  [0.032, 0.032]
+        tag:
+            ids:    [0,1,2,3,4,5]
+            frames: [tag_0, tag_1, tag_2, tag_3, tag_4, tag_5]
+            sizes:  [0.032,0.032,0.032,0.032,0.032,0.032]
+
+  

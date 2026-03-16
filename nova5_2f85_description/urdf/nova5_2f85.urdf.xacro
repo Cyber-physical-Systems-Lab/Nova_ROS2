@@ -1,0 +1,184 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="nova5_with_robotiq_2f85">
+
+    <!-- ================================================================
+         Parameters
+         ================================================================ -->
+    <xacro:arg name="prefix"                  default="" />
+    <xacro:arg name="sim_ignition"            default="false" />
+    <xacro:arg name="sim_isaac"               default="false" />
+    <xacro:arg name="isaac_joint_commands"    default="/isaac_joint_commands" />
+    <xacro:arg name="isaac_joint_states"      default="/isaac_joint_states" />
+    <xacro:arg name="mock_sensor_commands"    default="false" />
+    <xacro:arg name="gripper_closed_position" default="0.7929" />
+
+    <!-- Promote boolean args to properties so they work in xacro:if/unless -->
+    <xacro:property name="sim_ignition" value="$(arg sim_ignition)"/>
+    <xacro:property name="sim_isaac"    value="$(arg sim_isaac)"/>
+
+    <!-- ================================================================
+         Nova5 arm geometry
+         (sim_gazebo:=false omits GazeboSystem ros2_control and Gazebo tags)
+         ================================================================ -->
+    <xacro:include filename="$(find nova5_2f85_description)/urdf/nova5_robot.xacro" />
+
+    <!-- Tool flange: fixed joint from Link6 to tool_link -->
+    <link name="tool_link"/>
+    <joint name="flange" type="fixed">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <parent link="Link6"/>
+        <child link="tool_link"/>
+    </joint>
+    
+    <!-- ================================================================
+         Nova5-to-Robotiq physical adapter
+         Adds the adapter mesh and a +11 mm Z offset mount point.
+         Declares gripper_mount_link as the child.
+         ================================================================ -->
+    <xacro:include filename="$(find nova5_2f85_description)/urdf/nova5_to_robotiq_adapter.urdf.xacro" />
+
+    <xacro:nova5_to_robotiq
+        prefix="$(arg prefix)"
+        parent="tool_link"
+        child="$(arg prefix)gripper_mount_link"/>
+
+    <!-- ================================================================
+         Robotiq 2F-85 gripper
+         Mounts on gripper_mount_link (declared by adapter above).
+         Includes its own mock_components ros2_control block
+         (RobotiqGripperHardwareInterface) via the macro.
+         Real gripper motion is handled externally by the
+         robotiq_2f85_bringup action server over Modbus TCP.
+         ================================================================ -->
+    <xacro:include filename="$(find nova5_2f85_description)/urdf/robotiq_2f_85_macro.urdf.xacro" />
+
+    <xacro:robotiq_gripper
+        name="RobotiqGripperHardwareInterface"
+        prefix="$(arg prefix)"
+        parent="$(arg prefix)gripper_mount_link"
+        sim_ignition="$(arg sim_ignition)"
+        sim_isaac="$(arg sim_isaac)"
+        isaac_joint_commands="$(arg isaac_joint_commands)"
+        isaac_joint_states="$(arg isaac_joint_states)"
+        mock_sensor_commands="$(arg mock_sensor_commands)"
+        gripper_closed_position="$(arg gripper_closed_position)"
+        include_ros2_control="false">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+    </xacro:robotiq_gripper>
+
+    <!-- ================================================================
+         Unified ros2_control block  (NovaSystem)
+         Arm (joint1-joint6) + Gripper (primary + mimic joints) in one
+         hardware interface for MoveIt and real hardware control.
+         ================================================================ -->
+    <ros2_control name="NovaSystem" type="system">
+        <hardware>
+            <xacro:if value="${sim_isaac}">
+                <plugin>topic_based_ros2_control/TopicBasedSystem</plugin>
+                <param name="joint_commands_topic">$(arg isaac_joint_commands)</param>
+                <param name="joint_states_topic">$(arg isaac_joint_states)</param>
+                <param name="trigger_joint_command_threshold">0.02</param>
+            </xacro:if>
+            <xacro:if value="${sim_ignition}">
+                <plugin>ign_ros2_control/IgnitionSystem</plugin>
+            </xacro:if>
+            <xacro:unless value="${sim_ignition or sim_isaac}">
+                <plugin>mock_components/GenericSystem</plugin>
+                <param name="mock_sensor_commands">$(arg mock_sensor_commands)</param>
+                <param name="state_following_offset">0.0</param>
+            </xacro:unless>
+        </hardware>
+
+        <!-- Arm joints -->
+        <joint name="joint1">
+            <command_interface name="position"/>
+            <state_interface name="position">
+                <param name="initial_value">0.0</param>
+            </state_interface>
+            <state_interface name="velocity"/>
+        </joint>
+        <joint name="joint2">
+            <command_interface name="position"/>
+            <state_interface name="position">
+                <param name="initial_value">0.0</param>
+            </state_interface>
+            <state_interface name="velocity"/>
+        </joint>
+        <joint name="joint3">
+            <command_interface name="position"/>
+            <state_interface name="position">
+                <param name="initial_value">0.0</param>
+            </state_interface>
+            <state_interface name="velocity"/>
+        </joint>
+        <joint name="joint4">
+            <command_interface name="position"/>
+            <state_interface name="position">
+                <param name="initial_value">0.0</param>
+            </state_interface>
+            <state_interface name="velocity"/>
+        </joint>
+        <joint name="joint5">
+            <command_interface name="position"/>
+            <state_interface name="position">
+                <param name="initial_value">0.0</param>
+            </state_interface>
+            <state_interface name="velocity"/>
+        </joint>
+        <joint name="joint6">
+            <command_interface name="position"/>
+            <state_interface name="position">
+                <param name="initial_value">0.0</param>
+            </state_interface>
+            <state_interface name="velocity"/>
+        </joint>
+
+        <!-- Gripper primary actuated joint -->
+        <joint name="$(arg prefix)robotiq_85_left_knuckle_joint">
+            <command_interface name="position"/>
+            <state_interface name="position">
+                <param name="initial_value">0.0</param>
+            </state_interface>
+            <state_interface name="velocity"/>
+        </joint>
+
+        <!-- Gripper mimic joints -->
+        <joint name="$(arg prefix)robotiq_85_right_knuckle_joint">
+            <param name="mimic">$(arg prefix)robotiq_85_left_knuckle_joint</param>
+            <param name="multiplier">-1</param>
+            <command_interface name="position"/>
+            <state_interface name="position"/>
+            <state_interface name="velocity"/>
+        </joint>
+        <joint name="$(arg prefix)robotiq_85_left_inner_knuckle_joint">
+            <param name="mimic">$(arg prefix)robotiq_85_left_knuckle_joint</param>
+            <param name="multiplier">1</param>
+            <command_interface name="position"/>
+            <state_interface name="position"/>
+            <state_interface name="velocity"/>
+        </joint>
+        <joint name="$(arg prefix)robotiq_85_right_inner_knuckle_joint">
+            <param name="mimic">$(arg prefix)robotiq_85_left_knuckle_joint</param>
+            <param name="multiplier">-1</param>
+            <command_interface name="position"/>
+            <state_interface name="position"/>
+            <state_interface name="velocity"/>
+        </joint>
+        <joint name="$(arg prefix)robotiq_85_left_finger_tip_joint">
+            <param name="mimic">$(arg prefix)robotiq_85_left_knuckle_joint</param>
+            <param name="multiplier">-1</param>
+            <command_interface name="position"/>
+            <state_interface name="position"/>
+            <state_interface name="velocity"/>
+        </joint>
+        <joint name="$(arg prefix)robotiq_85_right_finger_tip_joint">
+            <param name="mimic">$(arg prefix)robotiq_85_left_knuckle_joint</param>
+            <param name="multiplier">1</param>
+            <command_interface name="position"/>
+            <state_interface name="position"/>
+            <state_interface name="velocity"/>
+        </joint>
+
+    </ros2_control>
+
+</robot>
