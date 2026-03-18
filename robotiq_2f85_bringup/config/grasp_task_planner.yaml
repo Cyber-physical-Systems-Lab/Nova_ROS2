@@ -7,13 +7,16 @@
     pre_grasp_offset_m: 0.05
     pre_grasp_settle_time_s: 0.0
     execute_timeout_position_tolerance_m: 0.02
+    target_reached_tolerance_m: 0.01
     cartesian_max_step_m: 0.005
     cartesian_min_fraction: 0.99
+    auto_open_percent: 100.0
+    gripper_max_effort: 50.0
 
     drop_pose:
       position:
         x: -0.5
-        y: 0.0
+        y: -0.3
         z: 0.15
       orientation:
         x: 1.0
@@ -21,7 +24,7 @@
         z: 0.0
         w: 0.0
 
-    start_pose: 
+    home_pose:
       position:
         x: 0.04
         y: 0.3
@@ -36,7 +39,7 @@
       position:
         x: -0.25
         y: 0.41
-        z: 0.23
+        z: 0.22
       orientation:
         x: 1.0
         y: 0.0
@@ -47,7 +50,7 @@
       position:
         x: -0.087
         y: 0.41
-        z: 0.23
+        z: 0.22
       orientation:
         x: 1.0
         y: 0.0
@@ -58,7 +61,7 @@
       position:
         x: 0.064
         y: 0.466
-        z: 0.23
+        z: 0.22
       orientation:
         x: 1.0
         y: 0.0
@@ -69,7 +72,7 @@
       position:
         x: -0.046
         y: 0.572
-        z: 0.23
+        z: 0.22
       orientation:
         x: 1.0
         y: 0.0
@@ -80,7 +83,7 @@
       position:
         x: 0.115
         y: 0.616
-        z: 0.23
+        z: 0.22
       orientation:
         x: 1.0
         y: 0.0

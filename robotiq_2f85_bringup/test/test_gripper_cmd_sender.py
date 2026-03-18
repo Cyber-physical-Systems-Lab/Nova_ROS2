@@ -24,7 +24,7 @@ from robotiq_2f85_bringup import gripper_cmd_sender
 def test_parse_web_command_accepts_numeric_text(text, expected):
     assert gripper_cmd_sender._parse_web_command(text) == pytest.approx(expected)
 
-@pytest.mark.parametrize('text', ['start_grasp', 'stop_grasp'])
+@pytest.mark.parametrize('text', ['start_grasp', 'stop_grasp', 'go_home'])
 def test_parse_web_command_ignores_arm_task_commands(text):
     assert gripper_cmd_sender._parse_web_command(text) is None
 
@@ -74,5 +74,6 @@ def test_web_command_cb_ignores_arm_task_commands_without_warning():
 
     node._web_command_cb(String(data='start_grasp'))
     node._web_command_cb(String(data='stop_grasp'))
+    node._web_command_cb(String(data='go_home'))
     assert queued == []
     assert logger.warnings == []

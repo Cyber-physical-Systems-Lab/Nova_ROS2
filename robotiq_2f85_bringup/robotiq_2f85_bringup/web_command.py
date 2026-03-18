@@ -7,10 +7,12 @@ import math
 GRIPPER_POSITION_COMMAND = 'gripper_pos'
 START_GRASP_COMMAND = 'start_grasp'
 STOP_GRASP_COMMAND = 'stop_grasp'
+GO_HOME_COMMAND = 'go_home'
 _SUPPORTED_COMMANDS = {
     GRIPPER_POSITION_COMMAND,
     START_GRASP_COMMAND,
     STOP_GRASP_COMMAND,
+    GO_HOME_COMMAND,
 }
 
 
@@ -70,3 +72,7 @@ def is_start_grasp(command: WebCommand) -> bool:
 
 def is_stop_grasp(command: WebCommand) -> bool:
     return command.kind == STOP_GRASP_COMMAND
+
+
+def is_go_home(command: WebCommand) -> bool:
+    return command.kind == GO_HOME_COMMAND

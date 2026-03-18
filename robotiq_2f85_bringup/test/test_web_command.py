@@ -15,6 +15,7 @@ from robotiq_2f85_bringup import web_command
         ('gripper_pos: 83', web_command.GRIPPER_POSITION_COMMAND, 83.0),
         ('start_grasp', web_command.START_GRASP_COMMAND, None),
         ('stop_grasp', web_command.STOP_GRASP_COMMAND, None),
+        ('go_home', web_command.GO_HOME_COMMAND, None),
     ],
 )
 def test_parse_web_command_accepts_supported_payloads(
@@ -36,10 +37,12 @@ def test_parse_web_command_accepts_supported_payloads(
         'gripper_pos:',
         'start_grasp:',
         'stop_grasp:',
+        'go_home:',
         'foo:1',
         'gripper_pos:abc',
         'start_grasp:1',
         'stop_grasp:1',
+        'go_home:1',
         'start_pose',
         'start_pose:',
         'start_pose:1',

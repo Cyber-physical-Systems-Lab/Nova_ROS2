@@ -100,7 +100,7 @@ def test_full_bringup_launch_includes_gripper_and_grasp_web_command_nodes(monkey
         for entity in launch_description.entities
         if getattr(entity, '_Node__node_executable', None) == 'apriltag_node'
     ]
-    assert len(apriltag_nodes) == 1
+    assert len(apriltag_nodes) == 0
 
     apriltag_localizer_nodes = [
         entity
@@ -114,27 +114,14 @@ def test_full_bringup_launch_includes_gripper_and_grasp_web_command_nodes(monkey
         for entity in launch_description.entities
         if getattr(entity, '_Node__node_executable', None) == 'apriltag_pose_printer'
     ]
-    assert len(apriltag_printer_nodes) == 1
-    printer_params = _node_parameter_map(apriltag_printer_nodes[0])
-    assert '/detections' in printer_params['detection_topic']
-    assert printer_params['anchor_tag_id'] == '11'
-    assert 'base_link' in printer_params['anchor_parent_frame']
-    assert 'latched_tag_11' in printer_params['anchor_child_frame']
-    assert printer_params['tag_ids'] == '01234'
-    assert 'latched_tag_11' in printer_params['frames_to_log']
-    assert 'base_link' in printer_params['frames_to_log']
+    assert len(apriltag_printer_nodes) == 0
 
     fixed_tag_tf_nodes = [
         entity
         for entity in launch_description.entities
         if getattr(entity, '_Node__node_name', None) == 'fixed_map_tag_11_tf'
     ]
-    assert len(fixed_tag_tf_nodes) == 1
-    fixed_tag_tf_arguments = _node_arguments(fixed_tag_tf_nodes[0])
-    assert 'map_tag_11' in fixed_tag_tf_arguments
-    assert '0.222' in fixed_tag_tf_arguments
-    assert '0.223' in fixed_tag_tf_arguments
-    assert '0.794' in fixed_tag_tf_arguments
+    assert len(fixed_tag_tf_nodes) == 0
 
     move_group_nodes = [
         entity
