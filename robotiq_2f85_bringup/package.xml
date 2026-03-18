@@ -14,12 +14,19 @@
 
   <depend>rclpy</depend>
   <depend>ament_index_python</depend>
+  <depend>action_msgs</depend>
+  <depend>apriltag_msgs</depend>
   <depend>control_msgs</depend>
   <depend>dobot_msgs_v3</depend>
+  <depend>geometry_msgs</depend>
   <depend>launch</depend>
   <depend>launch_ros</depend>
   <depend>dobot_bringup_v3</depend>
+  <depend>moveit_msgs</depend>
   <depend>sensor_msgs</depend>
+  <depend>shape_msgs</depend>
+  <depend>std_msgs</depend>
+  <depend>tf2_ros</depend>
   <exec_depend>python3-opencv</exec_depend>
   <exec_depend>python3-yaml</exec_depend>
 

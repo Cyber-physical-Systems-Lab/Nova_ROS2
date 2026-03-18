@@ -28,11 +28,17 @@ setup(
     },
     entry_points={
         'console_scripts': [
+            # Export only the supported manager/proxy runtime path.
+            # gripper_feedback_publisher.py remains in-tree as a legacy helper.
             'robotiq_2f85_action_server = robotiq_2f85_bringup.action_server:main',
+            'gripper_modbus_manager = robotiq_2f85_bringup.gripper_modbus_manager:main',
             'gripper_cmd_sender = robotiq_2f85_bringup.gripper_cmd_sender:main',
+            'grasp_task_planner = robotiq_2f85_bringup.grasp_task_planner:main',
+            'planning_scene_table = robotiq_2f85_bringup.planning_scene_table:main',
             'camera_publisher = robotiq_2f85_bringup.camera_publisher:main',
             'nova5_2f85_joint_states = robotiq_2f85_bringup.nova5_2f85_joint_states:main',
             'apriltag_arm_planner = robotiq_2f85_bringup.apriltag_arm_planner:main',
+            'apriltag_pose_printer = robotiq_2f85_bringup.apriltag_pose_printer:main',
         ],
     },
 )

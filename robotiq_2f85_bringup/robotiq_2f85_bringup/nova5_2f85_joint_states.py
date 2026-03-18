@@ -63,8 +63,7 @@ class Nova52f85JointStates(Node):
             10,
         )
 
-        # Optional: track real gripper position if the action server
-        # publishes joint states on /gripper/joint_states
+        # Track real gripper position from the shared gripper Modbus manager.
         self.create_subscription(
             JointState,
             '/gripper/joint_states',
@@ -93,6 +92,8 @@ class Nova52f85JointStates(Node):
         out.position = list(self._arm_positions) + [
             self._gripper_pos * m for m in GRIPPER_MIMIC
         ]
+        out.velocity = []
+        out.effort = []
 
         self._pub.publish(out)
 

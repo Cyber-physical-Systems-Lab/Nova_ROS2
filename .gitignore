@@ -1,1 +1,6 @@
 .vscode/*
+
+# ignore pycache
+__pycache__/
+# ignore build files
+build/

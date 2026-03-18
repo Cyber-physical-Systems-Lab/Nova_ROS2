@@ -8,6 +8,10 @@ from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 from moveit_configs_utils import MoveItConfigsBuilder
 
+TRAJECTORY_EXECUTION_ALLOWED_EXECUTION_DURATION_SCALING = 4.0
+TRAJECTORY_EXECUTION_ALLOWED_GOAL_DURATION_MARGIN_S = 2.0
+TRAJECTORY_EXECUTION_ALLOWED_START_TOLERANCE_RAD = 0.05
+
 
 def generate_launch_description():
 
@@ -89,6 +93,14 @@ def generate_launch_description():
         parameters=[
             moveit_config.to_dict(),
             moveit_config.planning_pipelines,
+            {
+                'trajectory_execution.allowed_execution_duration_scaling':
+                    TRAJECTORY_EXECUTION_ALLOWED_EXECUTION_DURATION_SCALING,
+                'trajectory_execution.allowed_goal_duration_margin':
+                    TRAJECTORY_EXECUTION_ALLOWED_GOAL_DURATION_MARGIN_S,
+                'trajectory_execution.allowed_start_tolerance':
+                    TRAJECTORY_EXECUTION_ALLOWED_START_TOLERANCE_RAD,
+            },
         ],
     )
 

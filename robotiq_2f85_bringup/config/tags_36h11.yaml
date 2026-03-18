@@ -23,8 +23,8 @@
         #   frames: [tag_zero, tag_one]
         #   sizes:  [0.032, 0.032]
         tag:
-            ids:    [0,1,2,3,4,5]
-            frames: [tag_0, tag_1, tag_2, tag_3, tag_4, tag_5]
-            sizes:  [0.032,0.032,0.032,0.032,0.032,0.032]
+            ids:    [0,1,2,3,4,5,11]
+            frames: [tag_0, tag_1, tag_2, tag_3, tag_4, tag_5, tag_11]
+            sizes:  [0.032,0.032,0.032,0.032,0.032,0.032, 0.095]
 
   

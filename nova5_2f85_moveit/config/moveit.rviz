@@ -14,6 +14,7 @@ Visualization Manager:
       Name: Grid
       Value: true
     - Class: moveit_rviz_plugin/MotionPlanning
+      MoveIt_Use_Cartesian_Path: false
       Name: MotionPlanning
       Planned Path:
         Loop Animation: true

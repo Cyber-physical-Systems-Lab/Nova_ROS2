@@ -1,0 +1,88 @@
+/**:
+  ros__parameters:
+    command_topic: /web_command
+    object_id_topic: /grasp_object_id
+    base_frame: base_link
+    lift_height_m: 0.2
+    pre_grasp_offset_m: 0.05
+    pre_grasp_settle_time_s: 0.0
+    execute_timeout_position_tolerance_m: 0.02
+    cartesian_max_step_m: 0.005
+    cartesian_min_fraction: 0.99
+
+    drop_pose:
+      position:
+        x: -0.5
+        y: 0.0
+        z: 0.15
+      orientation:
+        x: 1.0
+        y: 0.0
+        z: 0.0
+        w: 0.0
+
+    start_pose: 
+      position:
+        x: 0.04
+        y: 0.3
+        z: 0.3
+      orientation:
+        x: 1.0
+        y: 0.0
+        z: 0.0
+        w: 0.0
+
+    grasp_pose_1:
+      position:
+        x: -0.25
+        y: 0.41
+        z: 0.23
+      orientation:
+        x: 1.0
+        y: 0.0
+        z: 0.0
+        w: 0.0
+
+    grasp_pose_2:
+      position:
+        x: -0.087
+        y: 0.41
+        z: 0.23
+      orientation:
+        x: 1.0
+        y: 0.0
+        z: 0.0
+        w: 0.0
+
+    grasp_pose_3:
+      position:
+        x: 0.064
+        y: 0.466
+        z: 0.23
+      orientation:
+        x: 1.0
+        y: 0.0
+        z: 0.0
+        w: 0.0
+
+    grasp_pose_4:
+      position:
+        x: -0.046
+        y: 0.572
+        z: 0.23
+      orientation:
+        x: 1.0
+        y: 0.0
+        z: 0.0
+        w: 0.0
+
+    grasp_pose_5:
+      position:
+        x: 0.115
+        y: 0.616
+        z: 0.23
+      orientation:
+        x: 1.0
+        y: 0.0
+        z: 0.0
+        w: 0.0
