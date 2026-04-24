@@ -209,6 +209,24 @@ def generate_launch_description():
         ],
     )
 
+    # New task planner node
+    # grasp_task_planner_mtc_node = Node(
+#     package='nova5_2f85_mtc',
+#     executable='grasp_task_planner_mtc_node',
+#     name='grasp_task_planner_mtc_node',
+#     output='screen',
+#     parameters=[
+#         PathJoinSubstitution([bringup_share, 'config', 'grasp_task_planner.yaml']),
+#         moveit_config.to_dict(),
+#         {'arm_group': 'nova5_group'},
+#         {'gripper_group': 'gripper'},
+#         {'base_frame': 'base_link'},
+#         {'ik_frame': 'tool_link'},
+#         {'open_named_target': 'open'},
+#         {'close_named_target': 'close'},
+#     ],
+# )
+
     # ── 10. MoveIt move_group ─────────────────────────────────────────────────
     move_group_node = Node(
         package='moveit_ros_move_group',
@@ -406,6 +424,7 @@ def generate_launch_description():
         gripper_node,          # Public gripper action proxy
         web_command_node,      # /web_command gripper_pos routing
         grasp_task_planner_node,  # /web_command grasp-task routing
+        # grasp_task_planner_mtc_node,  # New MTC task planner
 
         # ── MoveIt ─────────────────────────────────────────────────────────
         move_group_node,

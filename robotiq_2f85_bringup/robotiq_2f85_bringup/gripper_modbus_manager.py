@@ -60,6 +60,20 @@ _WEB_FEEDBACK_QOS = QoSProfile(
     reliability=ReliabilityPolicy.RELIABLE,
     durability=DurabilityPolicy.TRANSIENT_LOCAL,
 )
+_GRIPPER_SPEED_MAX = 0xFF
+_GRIPPER_FORCE_MIN = 0x00
+
+
+def _pack_speed_force_register(speed: int, force: int) -> int:
+    speed = max(0, min(0xFF, int(speed)))
+    force = max(0, min(0xFF, int(force)))
+    return (speed << 8) | force
+
+
+_GRIPPER_SPD_FRC_MIN_FORCE = _pack_speed_force_register(
+    _GRIPPER_SPEED_MAX,
+    _GRIPPER_FORCE_MIN,
+)
 
 
 def _build_result(
@@ -528,7 +542,7 @@ class GripperModbusManager(Node):
             ok = (
                 await self._write_reg(_REG_ACTION, _ACT_GOTO)
                 and await self._write_reg(_REG_POS, reg_pos)
-                and await self._write_reg(_REG_SPD_FRC, 65535)
+                and await self._write_reg(_REG_SPD_FRC, _GRIPPER_SPD_FRC_MIN_FORCE)
             )
             if not ok:
                 self.get_logger().error('Failed to send the gripper Modbus write sequence')
@@ -557,7 +571,12 @@ class GripperModbusManager(Node):
             self._action_active = False
 
         goal_handle.succeed()
-        return _build_result(feedback.joint_position, 255.0, False, True)
+        return _build_result(
+            feedback.joint_position,
+            float(_GRIPPER_FORCE_MIN),
+            False,
+            True,
+        )
 
     def _feedback_timer_cb(self) -> None:
         if self._action_active:

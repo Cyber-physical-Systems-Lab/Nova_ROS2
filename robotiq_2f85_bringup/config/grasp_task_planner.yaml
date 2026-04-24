@@ -16,8 +16,8 @@
     drop_pose:
       position:
         x: -0.5
-        y: -0.3
-        z: 0.15
+        y: -0.1
+        z: 0.2
       orientation:
         x: 1.0
         y: 0.0
@@ -39,7 +39,7 @@
       position:
         x: -0.25
         y: 0.41
-        z: 0.22
+        z: 0.21
       orientation:
         x: 1.0
         y: 0.0
@@ -50,7 +50,7 @@
       position:
         x: -0.087
         y: 0.41
-        z: 0.22
+        z: 0.225
       orientation:
         x: 1.0
         y: 0.0
@@ -61,7 +61,7 @@
       position:
         x: 0.064
         y: 0.466
-        z: 0.22
+        z: 0.25
       orientation:
         x: 1.0
         y: 0.0
@@ -72,7 +72,7 @@
       position:
         x: -0.046
         y: 0.572
-        z: 0.22
+        z: 0.23
       orientation:
         x: 1.0
         y: 0.0
@@ -83,7 +83,7 @@
       position:
         x: 0.115
         y: 0.616
-        z: 0.22
+        z: 0.35
       orientation:
         x: 1.0
         y: 0.0
